@@ -6,7 +6,7 @@ var app = express();
 // //MARK: MODULES
 var mongoose = require('mongoose');
 var env = process.env.NODE_ENV;
-mongoose.connect(env == "development" ? 'mongodb://localhost/odd-push' : 'mongodb://localhost/odd-push');
+mongoose.connect(env == "development" ? 'mongodb://localhost/odd-push' : process.env.PROD_MONGODB);
 
 //MARK: MODELS
 var deviceSchema = mongoose.Schema({
