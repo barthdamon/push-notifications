@@ -18,8 +18,9 @@ var DeviceToken = mongoose.model('DeviceToken', deviceSchema);
 //MARK ROUTES
 exports.addToken = function(req, res) {
 	var newToken = req.body.params.token;
+	
 	var newDevice = new DeviceToken({
-		token: req.body.params.token,
+		token: newToken,
 	});
 
 	newDevice.save(function(err) {
