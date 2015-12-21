@@ -7,6 +7,7 @@ app.set('port', (process.env.PORT || 3000));
 //MARK: MODULES
 var bodyParser = require('body-parser');
 var deviceTokens = require('./routes/device-tokens.js');
+var pushem = require('./routes/pushem.js');
 
 //MARK: MIDDLEWARE
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -21,6 +22,7 @@ app.post('/', function(req, res) {
 });
 
 app.post('/device/new', deviceTokens.addToken);
+app.post('/notification/push', pushem.sendNotification);
 
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
