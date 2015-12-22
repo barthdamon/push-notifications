@@ -29,7 +29,7 @@ exports.sendNotification = function(req, res) {
 		return res.status(400).json({message: 'No push notification supplied.'});
 	}
 
-	let message = {};
+	let message = {default: (req.body.appleMessage || req.body.androidMessage)};
 	if (applePush) {
 		message.APNS = applePush;
 	}
