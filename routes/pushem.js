@@ -9,7 +9,7 @@ function buildApplePush(appleMessage, appleLink){
 	if (appleLink) {
 		result.aps.url = appleLink;
 	}
-	return { DataType: 'String', StringValue: JSON.stringify(result) };
+	return JSON.stringify(result);
 }
 
 function buildAndroidPush(androidMessage, androidLink){
@@ -18,7 +18,7 @@ function buildAndroidPush(androidMessage, androidLink){
 	if (androidLink) {
 		result.data.url = androidLink;
 	}
-	return { DataType: 'String', StringValue: JSON.stringify(result) };
+	return JSON.stringify(result);
 }
 
 exports.sendNotification = function(req, res) {
@@ -29,18 +29,17 @@ exports.sendNotification = function(req, res) {
 		return res.status(400).json({message: 'No push notification supplied.'});
 	}
 
+	let message = {};
+	if (applePush) {
+		message.APNS = applePush;
+	}
+	if (androidPush) {
+		message.ADM = androidPush;
+	}
 	let snsParams = {
 		TopicArn: process.env.SNS_TOPIC_ARN,
-		Message: 'Do we see this?',
-		MessageAttributes: {}
-	};
-
-	if (applePush) {
-		snsParams.MessageAttributes.APNS = applePush;
-	}
-
-	if (androidPush) {
-		snsParams.MessageAttributes.ADM = androidPush;
+		MessageStructure: 'json',
+		Message: JSON.stringify(message);
 	}
 
 	new AWS.SNS().publish(snsParams, function(err, data) {
