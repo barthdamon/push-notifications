@@ -5,7 +5,7 @@ AWS.config.update({region: 'us-east-1'});
 
 function buildApplePush(appleMessage, appleLink){
 	if (!appleMessage) { return null; }
-	let result = {aps: {alert: appleMessage}};
+	let result = {aps: {alert: appleMessage}, link: "collectionIdHere"};
 	if (appleLink) {
 		result.aps.url = appleLink;
 	}
