@@ -12,18 +12,22 @@ function buildApplePush(appleMessage, appleLink){
 	return JSON.stringify(result);
 }
 
-function buildAndroidPush(androidMessage, androidLink){
+function buildAndroidPush(androidMessage, androidLink, title){
 	if (!androidMessage) { return null; }
 	let result = {data: {message: androidMessage}};
 	if (androidLink) {
 		result.data.url = androidLink;
 	}
+	if (title) {
+		result.data.title = title;
+	}
 	return JSON.stringify(result);
 }
 
 exports.sendNotification = function(req, res) {
-	let applePush   = buildApplePush(req.body.appleMessage, req.body.appleLink);
-	let androidPush = buildAndroidPush(req.body.androidMessage, req.body.androidLink);
+	let body        = req.body;
+	let applePush   = buildApplePush(body.appleMessage, body.appleLink);
+	let androidPush = buildAndroidPush(body.androidMessage, body.androidLink, body.title);
 
 	if (!(applePush || androidPush)) {
 		return res.status(400).json({message: 'No push notification supplied.'});
