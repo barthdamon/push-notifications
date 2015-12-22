@@ -39,7 +39,7 @@ exports.sendNotification = function(req, res) {
 	let snsParams = {
 		TopicArn: process.env.SNS_TOPIC_ARN,
 		MessageStructure: 'json',
-		Message: JSON.stringify(message);
+		Message: JSON.stringify(message)
 	}
 
 	new AWS.SNS().publish(snsParams, function(err, data) {
