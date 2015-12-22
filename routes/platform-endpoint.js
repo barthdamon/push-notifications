@@ -10,11 +10,11 @@ AWS.config.update({region: 'us-east-1'});
 
 
 exports.createPlatformEndpoint = function(platform, token) {
-	var applicationArn = null
+	var applicationArn = null;
 	if (platform = "apple") {
-		applicationArn = 'arn:aws:sns:us-east-1:085864041402:app/APNS/ODDPBRTestApp'
+		applicationArn = process.env.APPLE_ARN_ID;
 	} else if (platform = "android") {
-		applicationArn = null
+		applicationArn = process.env.ANDROID_ARN_ID;
 	}
 
 	return new Promise(function(resolve, reject) {
@@ -29,9 +29,9 @@ exports.createPlatformEndpoint = function(platform, token) {
 		  // CustomUserData: 'STRING_VALUE'
 		};
 
-		sns.createPlatformEndpoint(params, function(err, data) {
+		new AWS.SNS().createPlatformEndpoint(params, function(err, data) {
 		   if (err) {
-				console.log(err, err.stack);
+				console.log(err);
 				reject(err);		  	
 		   }
 		   else {

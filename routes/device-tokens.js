@@ -18,8 +18,8 @@ var DeviceToken = mongoose.model('DeviceToken', deviceSchema);
 
 //MARK ROUTES
 exports.addToken = function(req, res) {
-	var newToken = req.body.params.token;
-	var platform = req.body.params.platform;
+	var newToken = req.body.token;
+	var platform = req.body.platform;
 	if (newToken && platform) {
 		var newDevice = new DeviceToken({
 			token: newToken,
@@ -31,6 +31,8 @@ exports.addToken = function(req, res) {
 			} else {	
 				platformEndpoint.createPlatformEndpoint(platform, newToken).then(function(data) {
 					res.status(200).json({ "message": "notification token registration successful" });
+				}).catch(function(err) {
+					res.status(400).json({"message": "notification token registration failure: " + err});
 				});
 			}
 		});
