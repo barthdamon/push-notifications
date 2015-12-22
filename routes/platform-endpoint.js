@@ -13,6 +13,7 @@ exports.createPlatformEndpoint = function(platform, token) {
 	var applicationArn = null;
 	if (platform = "apple") {
 		applicationArn = process.env.APPLE_ARN_ID;
+		// applicationArn = 'arn:aws:sns:us-east-1:085864041402:app/APNS/ODDPBRTestApp';
 	} else if (platform = "android") {
 		applicationArn = process.env.ANDROID_ARN_ID;
 	}
@@ -36,9 +37,37 @@ exports.createPlatformEndpoint = function(platform, token) {
 		   }
 		   else {
 		  		console.log(data);
-		  		resolve(data);
+		  		subscripeEndpointToTopic(data).then(function(subscriptionData) {
+					resolve(data);
+				}).catch(function(subscriptionErr) {
+					reject(subscriptionErr);
+				});
 		   }
 		});
 
 	});
 }
+
+function subscripeEndpointToTopic(data) {
+	return new Promise(function(resolve, reject) {
+		var endpointArn = data.EndpointArn
+		var params = {
+		  Protocol: 'application', /* required */
+		  TopicArn: process.env.SNS_TOPIC_ARN, /* required */
+		  // TopicArn: 'arn:aws:sns:us-east-1:085864041402:OddTestTopic', /* required */
+		  Endpoint: endpointArn
+		};
+		new AWS.SNS().subscribe(params, function(err, data) {
+		  	if (err) {
+				console.log(err); // an error occurred
+				reject(err);
+		  	}
+		  	else {
+		  		console.log(data);
+		  		resolve(data);  
+		  	}
+		});
+	});
+
+}
+
