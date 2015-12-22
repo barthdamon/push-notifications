@@ -41,6 +41,7 @@ exports.sendNotification = function(req, res) {
 		MessageStructure: 'json',
 		Message: JSON.stringify(message)
 	}
+	console.log(`Sending an sns to amazon: ${snsParams}`);
 
 	new AWS.SNS().publish(snsParams, function(err, data) {
 		if (err) {
