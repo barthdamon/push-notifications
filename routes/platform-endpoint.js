@@ -13,9 +13,11 @@ exports.createPlatformEndpoint = function(platform, token) {
 	var applicationArn = null;
 	if (platform === "apple") {
 		applicationArn = process.env.APPLE_ARN_ID;
+		console.log("Apple device registering");
 		// applicationArn = 'arn:aws:sns:us-east-1:085864041402:app/APNS/ODDPBRTestApp';
 	} else if (platform === "android") {
 		applicationArn = process.env.ANDROID_ARN_ID;
+		console.log("Android device registering");
 	}
 
 	return new Promise(function(resolve, reject) {
