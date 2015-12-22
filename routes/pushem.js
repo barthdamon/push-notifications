@@ -7,7 +7,7 @@ function buildApplePush(appleMessage, appleLink){
 	if (!appleMessage) { return null; }
 	let result = {aps: {alert: appleMessage}, link: "collectionIdHere"};
 	if (appleLink) {
-		result.aps.url = appleLink;
+		result.link = appleLink;
 	}
 	return JSON.stringify(result);
 }
