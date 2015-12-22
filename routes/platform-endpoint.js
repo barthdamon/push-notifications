@@ -34,10 +34,12 @@ exports.createPlatformEndpoint = function(platform, token) {
 
 		new AWS.SNS().createPlatformEndpoint(params, function(err, data) {
 		   if (err) {
+		   	console.log("new platform endpoint creation failure");
 				console.log(err);
 				reject(err);		  	
 		   }
 		   else {
+		   	console.log("new platform endpoint creation success");
 		  		console.log(data);
 		  		subscripeEndpointToTopic(data).then(function(subscriptionData) {
 					resolve(data);
@@ -51,6 +53,7 @@ exports.createPlatformEndpoint = function(platform, token) {
 }
 
 function subscripeEndpointToTopic(data) {
+	console.log("Subscribing new endpoint");
 	return new Promise(function(resolve, reject) {
 		var endpointArn = data.EndpointArn
 		var params = {
@@ -61,10 +64,12 @@ function subscripeEndpointToTopic(data) {
 		};
 		new AWS.SNS().subscribe(params, function(err, data) {
 		  	if (err) {
+		  		console.log("Subscription failed");
 				console.log(err); // an error occurred
 				reject(err);
 		  	}
 		  	else {
+		  		console.log("Subscription succeeded");
 		  		console.log(data);
 		  		resolve(data);  
 		  	}
