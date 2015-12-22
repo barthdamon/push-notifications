@@ -6,7 +6,6 @@ var app = express();
 //MARK: MODULES
 var Promise = require('bluebird');
 var AWS = require('aws-sdk');
-AWS.config.update({region: 'us-east-1'});
 
 
 exports.createPlatformEndpoint = function(platform, token) {
@@ -27,7 +26,7 @@ exports.createPlatformEndpoint = function(platform, token) {
 		  Token: token /* required */
 		  // Attributes: {
 		  //   someKey: 'STRING_VALUE',
-		  // //   anotherKey: ... 
+		  // //   anotherKey: ...
 		  // },
 		  // CustomUserData: 'STRING_VALUE'
 		};
@@ -36,7 +35,7 @@ exports.createPlatformEndpoint = function(platform, token) {
 		   if (err) {
 		   	console.log("new platform endpoint creation failure");
 				console.log(err);
-				reject(err);		  	
+				reject(err);
 		   }
 		   else {
 		   	console.log("new platform endpoint creation success");
@@ -71,7 +70,7 @@ function subscripeEndpointToTopic(data) {
 		  	else {
 		  		console.log("Subscription succeeded");
 		  		console.log(data);
-		  		resolve(data);  
+		  		resolve(data);
 		  	}
 		});
 	});
