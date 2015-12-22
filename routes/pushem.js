@@ -31,6 +31,7 @@ exports.sendNotification = function(req, res) {
 
 	let snsParams = {
 		TopicArn: process.env.SNS_TOPIC_ARN,
+		Message: 'Do we see this?',
 		MessageAttributes: {}
 	};
 
