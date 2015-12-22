@@ -34,7 +34,7 @@ exports.sendNotification = function(req, res) {
 		message.APNS = applePush;
 	}
 	if (androidPush) {
-		message.ADM = androidPush;
+		message.GCM = androidPush;
 	}
 	let snsParams = {
 		TopicArn: process.env.SNS_TOPIC_ARN,
