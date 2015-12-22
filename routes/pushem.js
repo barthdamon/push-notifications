@@ -1,10 +1,12 @@
 'use strict';
 
 let AWS = require('aws-sdk');
-AWS.config.update({region: 'us-east-1'});
 
 function buildApplePush(appleMessage, appleLink){
-	if (!appleMessage) { return null; }
+	if (!appleMessage) {
+		return null;
+	}
+
 	let result = {aps: {alert: appleMessage}};
 	if (appleLink) {
 		result.aps.url = appleLink;
@@ -13,7 +15,10 @@ function buildApplePush(appleMessage, appleLink){
 }
 
 function buildAndroidPush(androidMessage, androidLink, title){
-	if (!androidMessage) { return null; }
+	if (!androidMessage) {
+		return null;
+	}
+
 	let result = {data: {message: androidMessage}};
 	if (androidLink) {
 		result.data.url = androidLink;
@@ -29,7 +34,7 @@ exports.sendNotification = function(req, res) {
 	let applePush   = buildApplePush(body.appleMessage, body.appleLink);
 	let androidPush = buildAndroidPush(body.androidMessage, body.androidLink, body.title);
 
-	if (!(applePush || androidPush)) {
+	if (!body.message) {
 		return res.status(400).json({message: 'No push notification supplied.'});
 	}
 

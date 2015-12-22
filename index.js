@@ -1,13 +1,16 @@
 'use strict';
 
-var express = require('express');
-var app = express();
+let express = require('express');
+let app = express();
 app.set('port', (process.env.PORT || 3000));
 
+let AWS = require('aws-sdk');
+AWS.config.update({region: 'us-east-1'});
+
 //MARK: MODULES
-var bodyParser = require('body-parser');
-var deviceTokens = require('./routes/device-tokens.js');
-var pushem = require('./routes/pushem.js');
+let bodyParser = require('body-parser');
+let deviceTokens = require('./routes/device-tokens.js');
+let pushem = require('./routes/pushem.js');
 
 //MARK: MIDDLEWARE
 app.use(bodyParser.urlencoded({ extended: false }));
