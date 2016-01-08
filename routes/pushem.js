@@ -8,7 +8,8 @@ function buildApplePush(appleMessage, appleLink){
 	}
 	
 	return JSON.stringify({
-		aps: {alert: appleMessage, link: (appleLink || 'collectionIdHere')}
+		aps: {alert: appleMessage},
+		link: (appleLink || 'collectionIdHere')
 	});
 }
 
